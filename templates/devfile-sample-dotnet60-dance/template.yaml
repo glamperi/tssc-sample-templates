@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
 kind: Template
 metadata:
-  name: gary-dotnet-basic-gary
+  name: gary-dotnet-basic-gary2
   title:  GARY - C# .NET - Trusted Application Pipeline - Gary
   description: C# .Net 6.0 example with advanced continuous integration pipeline covering building, CVE scanning, security scanning, signatures,  attestations, SLSA provenance and SBOM along with Gitops-based continuous deployment
   tags: ["net", "sscs", "sbom", "acs"]
@@ -388,7 +388,7 @@ spec:
         argoInstance: main
         namespace: janus-argocd
         repoUrl: https://${{ parameters.ghHost if parameters.hostType === 'GitHub' else (parameters.glHost if parameters.hostType === 'GitLab' else parameters.bbHost)}}/${{ parameters.workspace if parameters.hostType === 'Bitbucket' else (parameters.ghOwner if parameters.hostType === 'GitHub' else parameters.glOwner)  }}/${{ parameters.repoName }}-gitops.git
-        path: 'argocd/'
+        path: './app-of-apps'
     # The wait for Repository CRs to be created, so the creation of the source repository triggers the first build.
     - id: wait-for-sync
       name: Waiting for ArgoCD Sync
