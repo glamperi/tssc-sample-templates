@@ -129,7 +129,7 @@ spec:
                   title: Repository Server
                   type: string
                   default: gitlab.com
-                  ui:help: "You can also provide the on-prem gitlab server, example: gitlab-gitlab.apps.cluster-ljg9z.sandbox219.opentlc.com"
+                  ui:help: "You can also provide the on-prem gitlab server, example: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com"
                 ciType:
                   title: CI Provider
                   type: string
@@ -214,7 +214,7 @@ spec:
           description: The image registry host
           default: quay.io
           ui:autofocus: true
-          ui:help: "You can also provide the on-prem registry host, example: quay-tv2pb.apps.cluster-tv2pb.sandbox1194.opentlc.com"
+          ui:help: "You can also provide the on-prem registry host, example: quay-vnfjq.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com"
         imageOrg:
           title: Image Organization
           type: string
