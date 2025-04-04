@@ -28,6 +28,7 @@ spec:
         owner:
           title: Owner
           type: string
+          default: group:default/user1
           description: Owner of the component
           default: user:guest
           ui:field: OwnerPicker
