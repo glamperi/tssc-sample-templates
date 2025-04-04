@@ -3,7 +3,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: gary-dotnet-basic-gary
-  title:  GARY2 - C# .NET - Trusted Application Pipeline - Gary
+  title:  GARY3 - C# .NET - Trusted Application Pipeline - Gary
   description: C# .Net 6.0 example with advanced continuous integration pipeline covering building, CVE scanning, security scanning, signatures,  attestations, SLSA provenance and SBOM along with Gitops-based continuous deployment
   tags: ["net", "sscs", "sbom", "acs"]
 spec:
@@ -123,12 +123,13 @@ spec:
                 glOwner:
                   title: Repository Owner
                   type: string
+                  default: development
                   ui:help: The organization, user or project that this repo will belong to
                   
                 glHost:
                   title: Repository Server
                   type: string
-                  default: gitlab.com
+                  default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
                   ui:help: "You can also provide the on-prem gitlab server, example: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com"
                 ciType:
                   title: CI Provider
@@ -212,12 +213,13 @@ spec:
           title: Image Registry
           type: string
           description: The image registry host
-          default: quay.io
+          default: quay-vnfjq.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
           ui:autofocus: true
           ui:help: "You can also provide the on-prem registry host, example: quay-vnfjq.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com"
         imageOrg:
           title: Image Organization
           type: string
+          default: quayadmin
           description: The organization, user or project that this repo will belong to
           
         imageName:
