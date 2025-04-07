@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet-web-api-sample
-  title: .NET Web API Sample - 6
+  title: .NET Web API Sample - 7
   description: A sample .NET Web API project 
 spec:
   type: service
@@ -10,28 +10,28 @@ parameters:
   - title: Application repository Information
     required:
       - repo
-  parameters:
-    name: PROJECT_NAME
-      description: The name of the project
-      default: dotnet-web-api-sample
-    repo:
-      title: Repository Location
-      type: object
-      properties:
-        host:
-          title: Repo Host
-          type: string
-          description: Your SCM host
-          default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
-          enum:
-            - gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
-        owner:
-          title: Repo Owner
-          type: string
-          description: Your SCM host organization/group
-          default: development
-          enum:
-            - development
+    parameters:
+      name: PROJECT_NAME
+        description: The name of the project
+        default: dotnet-web-api-sample
+      repo:
+        title: Repository Location
+        type: object
+        properties:
+          host:
+            title: Repo Host
+            type: string
+            description: Your SCM host
+            default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
+            enum:
+              - gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
+          owner:
+            title: Repo Owner
+            type: string
+            description: Your SCM host organization/group
+            default: development
+            enum:
+              - development
 
 
 
