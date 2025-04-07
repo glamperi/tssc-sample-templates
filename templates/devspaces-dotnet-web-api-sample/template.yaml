@@ -1,5 +1,5 @@
-apiVersion: scaffolder.backstage.io/v1beta3
-kind: Template
+apiVersion: devhub.redhat.com/v2
+kind: DevfileTemplate
 metadata:
   name: dotnet-web-api-sample
   title:  DOTNET WEB API
