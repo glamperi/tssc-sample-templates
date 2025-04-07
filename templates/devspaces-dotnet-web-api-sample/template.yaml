@@ -61,13 +61,7 @@ steps:
           https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/api/workspaces \
           -H 'Content-Type: application/json' \
           -d '{"name": "${{ parameters.name }}", "description": "Dev Spaces workspace for ${{ parameters.name }}"}'
-  output:
-    links:
-      - title: GitLab Repository
-        url: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/development/${{ parameters.name }}
-      - title: Dev Spaces Workspace
-        url: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/workspaces/${{ parameters.name }}
-
+  
 output:
   links:
     - title: GitLab Repository
