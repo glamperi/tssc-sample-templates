@@ -2,68 +2,27 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet-web-api-sample
-  title: .NET Web API Sample - 8
-  description: A sample .NET Web API project 
 spec:
   type: service
-parameters:
-  - title: Application repository Information
-    required:
-      - repo
-    properties:
-      name: 
-        title: PROJECT_NAME
-        type: string
-        description: The name of the project
-        default: dotnet-web-api-sample
-      repo:
-        title: Repository Location
-        type: object
-        properties:
-          host:
-            title: Repo Host
-            type: string
-            description: Your SCM host
-            default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
-            enum:
-              - gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
-          owner:
-            title: Repo Owner
-            type: string
-            description: Your SCM host organization/group
-            default: development
-            enum:
-              - development    
-steps:
-  - id: template
-    name: Fetch template
-    action: fetch:template
-    input:
-      url: https://github.com/glamperi/devspaces-dotnet-web-api-sample
-      values:
-        projectName: ${{ parameters.name }}
-  - id: publish-gitops
-    name: Publishing to Resource Repository
-    action: publish:gitlab
-    input:
-      repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.name}}"
-      title: gitlib resources for ${{ parameters.name }}
-      description: gitlab resources for ${{ parameters.name }}
-      sourcePath: https://github.com/glamperi/devspaces-dotnet-web-api-sample
-      repoVisibility: public
-
-  - id: devspaces
-    name: Create Dev Spaces workspace
-    action: bash
-    input:
-      script: |
-        curl -X POST \
-          https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/api/workspaces \
-          -H 'Content-Type: application/json' \
-          -d '{"name": "${{ parameters.name }}", "description": "Dev Spaces workspace for ${{ parameters.name }}"}
-output:
-  links:
-    - title: GitLab Repository
-      url: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/development/${{ parameters.name }}
-    - title: Dev Spaces Workspace
-      url: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/workspaces/${{ parameters.name }}
+  parameters:
+    - name: PROJECT_NAME
+      type: string
+      description: The name of the project
+      default: dotnet-web-api-sample
+  steps:
+    - id: template
+      name: Fetch template
+      action: fetch:template
+      input:
+        url: https://github.com/glamperi/devspaces-dotnet-web-api-sample
+        values:
+          projectName: ${{ parameters.PROJECT_NAME }}
+    - id: devspaces
+      name: Create Dev Spaces workspace
+      action: bash
+      input:
+        script: |
+          curl -X POST \
+            https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/api/workspaces \
+            -H 'Content-Type: application/json' \
+            -d '{"name": "${{ parameters.PROJECT_NAME }}", "description": "Dev Spaces workspace for ${{ parameters.PROJECT_NAME }}"}'
