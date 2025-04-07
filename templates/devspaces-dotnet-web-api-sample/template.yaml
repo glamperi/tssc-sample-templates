@@ -13,7 +13,7 @@ spec:
       default: dotnet-web-api-sample
     - name: GIT_REPO_URL
       description: The URL of the Git repository
-      default: https://github.com/rafaeltuelho/devspaces-dotnet-web-api-sample.git
+      default: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
     - name: GIT_BRANCH
       description: The branch of the Git repository
       default: main
