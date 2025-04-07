@@ -1,38 +1,50 @@
-apiVersion: scaffolder.backstage.io/v1beta3
-# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+apiVersion: devhub.redhat.com/v1
 kind: Template
 metadata:
-  name: my-dev-spaces-dotnet-webservice
-  title:  My Dev Spaces DotNet Web API Sample
-  description: DotNet WebService
-  tags: ["net", "webservice"]
+  name: dotnet-web-api-sample
 spec:
-  type: service
-  # These parameters are used to generate the input form in the frontend, and are
-  # used to gather input data for the execution of the template.
+  description: A .NET Web API sample application
+  tags:
+    - dotnet
+    - webapi
   parameters:
     - name: PROJECT_NAME
       description: The name of the project
-      default: my-project
-    - name: DATABASE_USER
-      description: The database username
-      default: dbuser
+      default: dotnet-web-api-sample
+    - name: GIT_REPO_URL
+      description: The URL of the Git repository
+      default: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
+    - name: GIT_BRANCH
+      description: The branch of the Git repository
+      default: main
   resources:
-    - name: my-service
-      type: Service
+    - name: dotnet-web-api-sample
+      type: devfile
       properties:
-        name: ${PROJECT_NAME}-service
-        ports:
-          - 8080
-    - name: my-deployment
-      type: Deployment
-      properties:
-        name: ${PROJECT_NAME}-deployment
-        replicas: 1
-        containers:
-          - name: my-container
-            image: my-image:latest
-            env:
-              - name: DATABASE_USER
-                value: ${DATABASE_USER}
-
+        devfile: |
+          ---
+          schemaVersion: 2.0.0
+          metadata:
+            name: dotnet-web-api-sample
+          components:
+            - name: dotnet-web-api-sample
+              container:
+                image: mcr.microsoft.com/dotnet/core/sdk:3.1
+                volumeMounts:
+                  - name: dotnet-web-api-sample
+                    path: /app
+                command: ["dotnet", "run"]
+                ports:
+                  - 5000
+          commands:
+            - name: build
+              command: dotnet build
+            - name: run
+              command: dotnet run
+          events:
+            preStart:
+              - build
+  outputs:
+    - name: dotnet-web-api-sample
+      type: url
+      value: http://{{PROJECT_NAME}}-dotnet-web-api-sample.{{NAMESPACE}}.svc.cluster.local:5000
