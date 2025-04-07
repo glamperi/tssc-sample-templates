@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet-web-api-sample
-  title: .NET Web API Sample - 5
+  title: .NET Web API Sample - 6
   description: A sample .NET Web API project 
 spec:
   owner: user1
