@@ -2,10 +2,10 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet-web-api-sample
-  title: .NET Web API Sample  - 3
-  description: A sample .NET Web API project
+  title: .NET Web API Sample
+  description: A sample .NET Web API project - 4 
 spec:
-  owner: your-team
+  owner: user1
   type: service
   parameters:
     - name: PROJECT_NAME
@@ -16,12 +16,28 @@ spec:
       name: Fetch template
       action: fetch:template
       input:
-        url: https://github.com/rafaeltuelho/devspaces-dotnet-web-api-sample
+        url: https://github.com/glamperi/devspaces-dotnet-web-api-sample
         values:
           projectName: ${{ parameters.PROJECT_NAME }}
+    - id: gitlab
+      name: Push to GitLab
+      action: publish:gitlab
+      input:
+        repoUrl: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/development/${{ parameters.PROJECT_NAME }}
+        token: ${{ secrets.GITLAB_TOKEN }}
+    - id: devspaces
+      name: Create Dev Spaces workspace
+      action: http:post
+      input:
+        url: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/api/workspaces
+        headers:
+          Content-Type: application/json
+        body:
+          name: ${{ parameters.PROJECT_NAME }}
+          description: Dev Spaces workspace for ${{ parameters.PROJECT_NAME }}
   output:
     links:
-      - title: Repository
-        url: https://github.com/${{ parameters.PROJECT_NAME }}
-
-
+      - title: GitLab Repository
+        url: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/development/${{ parameters.PROJECT_NAME }}
+      - title: Dev Spaces Workspace
+        url: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/workspaces/${{ parameters.PROJECT_NAME }}
