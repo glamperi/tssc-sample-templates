@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet-web-api-sample
-  title: dot net meta ai
+  title: dot net meta ai 2
 spec:
   type: service
   parameters:
