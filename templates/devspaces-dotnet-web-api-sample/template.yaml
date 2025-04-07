@@ -6,7 +6,6 @@ metadata:
 spec:
   type: service
   parameters:
-     - title: Application Information
        required:
          - name
        properties:
