@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet-web-api-sample
-  title: dot net meta ai 4
+  title: dot net meta ai 5
 spec:
   type: service
   parameters:
@@ -23,13 +23,13 @@ spec:
         values:
           projectName: ${{ parameters.name }}
     
+    
     - id: devspaces
       name: Create Dev Spaces workspace
-      action: http:post
+      action: publish:custom
       input:
+        provider: devspaces
         url: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/api/workspaces
-        headers:
-          Content-Type: application/json
-        body:
-          name: ${{ parameters.PROJECT_NAME }}
-          description: Dev Spaces workspace for ${{ parameters.PROJECT_NAME }}
+        data:
+          name: ${{ parameters.name }}
+          description: Dev Spaces workspace for ${{ parameters.name }}
