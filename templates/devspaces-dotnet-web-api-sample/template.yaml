@@ -7,10 +7,28 @@ metadata:
 spec:
   owner: user1
   type: service
+- title: Application repository Information
+  required:
+    - repo
   parameters:
-    - name: PROJECT_NAME
+    name: PROJECT_NAME
       description: The name of the project
       default: dotnet-web-api-sample
+    host:
+      title: Repo Host
+      type: string
+      description: Your SCM host
+      default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
+      enum:
+        - gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
+    owner:
+      title: Repo Owner
+      type: string
+      description: Your SCM host organization/group
+      default: development
+      enum:
+        - development
+
     
   steps:
     - id: template
