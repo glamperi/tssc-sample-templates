@@ -5,7 +5,8 @@ metadata:
 spec:
   type: service
   parameters:
-    - name: PROJECT_NAME
+    - name:
+      title: Project Name
       type: string
       description: The name of the project
       default: dotnet-web-api-sample
@@ -16,7 +17,7 @@ spec:
       input:
         url: https://github.com/glamperi/devspaces-dotnet-web-api-sample
         values:
-          projectName: ${{ parameters.PROJECT_NAME }}
+          projectName: ${{ parameters.name }}
     - id: devspaces
       name: Create Dev Spaces workspace
       action: bash
@@ -25,4 +26,4 @@ spec:
           curl -X POST \
             https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/api/workspaces \
             -H 'Content-Type: application/json' \
-            -d '{"name": "${{ parameters.PROJECT_NAME }}", "description": "Dev Spaces workspace for ${{ parameters.PROJECT_NAME }}"}'
+            -d '{"name": "${{ parameters.name }}", "description": "Dev Spaces workspace for ${{ parameters.name }}"}'
