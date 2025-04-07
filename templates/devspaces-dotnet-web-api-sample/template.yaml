@@ -52,15 +52,15 @@ steps:
       sourcePath: https://github.com/glamperi/devspaces-dotnet-web-api-sample
       repoVisibility: public
 
-   - id: devspaces
-      name: Create Dev Spaces workspace
-      action: script
-      input:
-        script: |
-          curl -X POST \
-            https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/api/workspaces \
-            -H 'Content-Type: application/json' \
-            -d '{"name": "${{ parameters.name }}", "description": "Dev Spaces workspace for ${{ parameters.name }}"}'
+  - id: devspaces
+    name: Create Dev Spaces workspace
+    action: script
+    input:
+      script: |
+        curl -X POST \
+          https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/dashboard/api/workspaces \
+          -H 'Content-Type: application/json' \
+          -d '{"name": "${{ parameters.name }}", "description": "Dev Spaces workspace for ${{ parameters.name }}"}'
   output:
     links:
       - title: GitLab Repository
