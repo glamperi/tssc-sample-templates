@@ -2,50 +2,21 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet-web-api-sample
-  title: .NET Web API Sample - 1
+  title: .NET Web API Sample - 2
   description: A sample .NET Web API project
 spec:
-  owner: user1
+  owner: your-team
   type: service
   parameters:
     - name: PROJECT_NAME
       description: The name of the project
       default: dotnet-web-api-sample
-    - name: GIT_REPO_URL
-      description: The URL of the Git repository
-      default: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
-    - name: GIT_BRANCH
-      description: The branch of the Git repository
-      default: main
-  resources:
-    - name: dotnet-web-api-sample
-      type: devfile
-      properties:
-        devfile: |
-          ---
-          schemaVersion: 2.0.0
-          metadata:
-            name: dotnet-web-api-sample
-          components:
-            - name: dotnet-web-api-sample
-              container:
-                image: mcr.microsoft.com/dotnet/core/sdk:3.1
-                volumeMounts:
-                  - name: dotnet-web-api-sample
-                    path: /app
-                command: ["dotnet", "run"]
-                ports:
-                  - 5000
-          commands:
-            - name: build
-              command: dotnet build
-            - name: run
-              command: dotnet run
-          events:
-            preStart:
-              - build
-  outputs:
-    - name: dotnet-web-api-sample
-      type: url
-      value: http://{{PROJECT_NAME}}-dotnet-web-api-sample.{{NAMESPACE}}.svc.cluster.local:5000
+  steps:
+    - name: Fetch template
+      action: fetch:template
+      input:
+        url: https://github.com/rafaeltuelho/devspaces-dotnet-web-api-sample
+        values:
+          projectName: ${{ parameters.PROJECT_NAME }}
+
 
