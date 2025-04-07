@@ -5,7 +5,7 @@ metadata:
   title: .NET Web API Sample
   description: A sample .NET Web API project
 spec:
-  owner: your-team
+  owner: user1
   type: service
   parameters:
     - name: PROJECT_NAME
