@@ -6,11 +6,15 @@ metadata:
 spec:
   type: service
   parameters:
-    - name:
-      title: Project Name
-      type: string
-      description: The name of the project
-      default: dotnet-web-api-sample
+     - title: Application Information
+      required:
+        - name
+      properties:
+        name:
+          title: Project Name
+          type: string
+          description: The name of the project
+          default: dotnet-web-api-sample
   steps:
     - id: template
       name: Fetch template
