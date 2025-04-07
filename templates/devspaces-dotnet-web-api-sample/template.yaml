@@ -20,7 +20,7 @@ spec:
         url: https://github.com/glamperi/devspaces-dotnet-web-api-sample
         values:
           projectName: ${{ parameters.PROJECT_NAME }}
-     - id: publish-gitops
+    - id: publish-gitops
       name: Publishing to Resource Repository
       action: publish:gitlab
       input:
