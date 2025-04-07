@@ -17,13 +17,35 @@ spec:
     - name: GIT_BRANCH
       description: The branch of the Git repository
       default: main
-  steps:
-    - name: Create project
-      action: exec:dotnet:new
-      input:
-        PROJECT_NAME: ${{ parameters.PROJECT_NAME }}
-    - name: Build and run project
-      action: exec:dotnet:run
-      input:
-        PROJECT_NAME: ${{ parameters.PROJECT_NAME }}
+  resources:
+    - name: dotnet-web-api-sample
+      type: devfile
+      properties:
+        devfile: |
+          ---
+          schemaVersion: 2.0.0
+          metadata:
+            name: dotnet-web-api-sample
+          components:
+            - name: dotnet-web-api-sample
+              container:
+                image: mcr.microsoft.com/dotnet/core/sdk:3.1
+                volumeMounts:
+                  - name: dotnet-web-api-sample
+                    path: /app
+                command: ["dotnet", "run"]
+                ports:
+                  - 5000
+          commands:
+            - name: build
+              command: dotnet build
+            - name: run
+              command: dotnet run
+          events:
+            preStart:
+              - build
+  outputs:
+    - name: dotnet-web-api-sample
+      type: url
+      value: http://{{PROJECT_NAME}}-dotnet-web-api-sample.{{NAMESPACE}}.svc.cluster.local:5000
 
