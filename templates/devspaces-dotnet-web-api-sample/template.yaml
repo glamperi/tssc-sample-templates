@@ -10,29 +10,29 @@ spec:
   type: service
   # These parameters are used to generate the input form in the frontend, and are
   # used to gather input data for the execution of the template.
-parameters:
-  - name: PROJECT_NAME
-    description: The name of the project
-    default: my-project
-  - name: DATABASE_USER
-    description: The database username
-    default: dbuser
-resources:
-  - name: my-service
-    type: Service
-    properties:
-      name: ${PROJECT_NAME}-service
-      ports:
-        - 8080
-  - name: my-deployment
-    type: Deployment
-    properties:
-      name: ${PROJECT_NAME}-deployment
-      replicas: 1
-      containers:
-        - name: my-container
-          image: my-image:latest
-          env:
-            - name: DATABASE_USER
-              value: ${DATABASE_USER}
+  parameters:
+    - name: PROJECT_NAME
+      description: The name of the project
+      default: my-project
+    - name: DATABASE_USER
+      description: The database username
+      default: dbuser
+  resources:
+    - name: my-service
+      type: Service
+      properties:
+        name: ${PROJECT_NAME}-service
+        ports:
+          - 8080
+    - name: my-deployment
+      type: Deployment
+      properties:
+        name: ${PROJECT_NAME}-deployment
+        replicas: 1
+        containers:
+          - name: my-container
+            image: my-image:latest
+            env:
+              - name: DATABASE_USER
+                value: ${DATABASE_USER}
 
