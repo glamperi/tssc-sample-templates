@@ -11,7 +11,9 @@ parameters:
     required:
       - repo
     properties:
-      name: PROJECT_NAME
+      name: 
+        title: PROJECT_NAME
+        type: string
         description: The name of the project
         default: dotnet-web-api-sample
       repo:
