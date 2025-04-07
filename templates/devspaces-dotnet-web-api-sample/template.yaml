@@ -33,11 +33,7 @@ parameters:
             description: Your SCM host organization/group
             default: development
             enum:
-              - development
-
-
-
-    
+              - development    
   steps:
     - id: template
       name: Fetch template
