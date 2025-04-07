@@ -1,5 +1,15 @@
-name: My Dev Spaces DotNet Web API Sample
-description: A template for deploying my project
+apiVersion: scaffolder.backstage.io/v1beta3
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+kind: Template
+metadata:
+  name: my-dev-spaces-dotnet-webservice
+  title:  My Dev Spaces DotNet Web API Sample
+  description: DotNet WebService
+  tags: ["net", "webservice"]
+spec:
+  type: service
+  # These parameters are used to generate the input form in the frontend, and are
+  # used to gather input data for the execution of the template.
 parameters:
   - name: PROJECT_NAME
     description: The name of the project
