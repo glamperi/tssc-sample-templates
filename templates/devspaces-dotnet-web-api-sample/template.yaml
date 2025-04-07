@@ -1,7 +1,10 @@
-apiVersion: devhub.redhat.com/v1
+apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet-web-api-sample
+  title:  DOTNET WEB API
+  description: C# .Net 6.0 example 
+  tags: ["net", "Webservice", "sbom", "acs"]
 spec:
   description: A .NET Web API sample application
   tags:
