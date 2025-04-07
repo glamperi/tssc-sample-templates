@@ -11,6 +11,7 @@ spec:
     - name: PROJECT_NAME
       description: The name of the project
       default: dotnet-web-api-sample
+    
   steps:
     - id: template
       name: Fetch template
@@ -19,12 +20,16 @@ spec:
         url: https://github.com/glamperi/devspaces-dotnet-web-api-sample
         values:
           projectName: ${{ parameters.PROJECT_NAME }}
-    - id: gitlab
-      name: Push to GitLab
+     - id: publish-gitops
+      name: Publishing to Resource Repository
       action: publish:gitlab
       input:
-        repoUrl: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/development/${{ parameters.PROJECT_NAME }}
-        token: ${{ secrets.GITLAB_TOKEN }}
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.PROJECT_NAME}}"
+        title: gitlib resources for ${{ parameters.PROJECT_NAME }}
+        description: gitlab resources for ${{ parameters.PROJECT_NAME }}
+        sourcePath: https://github.com/glamperi/devspaces-dotnet-web-api-sample
+        repoVisibility: public
+
     - id: devspaces
       name: Create Dev Spaces workspace
       action: http:post
