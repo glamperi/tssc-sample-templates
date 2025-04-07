@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: dotnet-web-api-sample
   title: .NET Web API Sample
-  description: A sample .NET Web API project - 4 
+  description: A sample .NET Web API project - 5
 spec:
   owner: user1
   type: service
