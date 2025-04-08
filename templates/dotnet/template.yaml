@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: devspaces-dotnet-web-api-sample
-  title: dot net METAS 12
+  title: dot net METAS 14
 spec:
   type: template
   parameters:
@@ -19,15 +19,17 @@ spec:
       action: fetch:plain
       input:
         url: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
-    - id: push-to-gitlab
+    - id: publish-gitlab-gitops
+      name: Publish GitOps Repository to GitLab
       action: publish:gitlab
       input:
-        integration: gitlab
-        repoUrl: ${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
-        repoName: devspaces-dotnet-web-api-sample
-        repoDescription: A sample .NET Web API repository
-        repoVisibility: private
-      dependsOn: [clone-github-repo]
+        sourcePath: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
+        allowedHosts: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
+        description: This is GitOps repository for ${{ parameters.name }}
+        repoUrl:  gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
+        defaultBranch: main
+        protectDefaultBranch: false
+        repoVisibility: "public"
     - id: create-devspaces-workspace
       action: devspaces:create-workspace
       input:
