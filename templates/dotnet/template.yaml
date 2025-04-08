@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: devspaces-dotnet-web-api-sample
-  title: dot net METAS 10
+  title: dot net METAS 11
 spec:
   type: template
   parameters:
@@ -23,7 +23,7 @@ spec:
       action: publish:gitlab
       input:
         integration: gitlab
-        repoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
+        repoUrl: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
         repoName: devspaces-dotnet-web-api-sample
         repoDescription: A sample .NET Web API repository
         repoVisibility: private
