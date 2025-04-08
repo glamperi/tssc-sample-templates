@@ -3,10 +3,6 @@ kind: Template
 metadata:
   name: devspaces-dotnet-web-api-sample
   title: dot net METAS 10
-apiVersion: scaffolder.backstage.io/v1beta3
-kind: Template
-metadata:
-  name: devspaces-dotnet-web-api-sample
 spec:
   type: template
   parameters:
