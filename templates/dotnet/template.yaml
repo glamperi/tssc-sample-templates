@@ -22,7 +22,7 @@ spec:
     - id: push-to-gitlab
       action: publish:gitlab
       input:
-        repoUrl: gitlab://${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
+        repoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
         repoName: devspaces-dotnet-web-api-sample
         repoDescription: A sample .NET Web API repository
         repoVisibility: private
@@ -32,11 +32,10 @@ spec:
       input:
         workspaceName: devspaces-dotnet-web-api-sample
         workspaceDescription: A sample .NET Web API workspace
-        gitRepoUrl: gitlab://${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
+        gitRepoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
       dependsOn: [push-to-gitlab]
   outputs:
     - name: gitlabRepoUrl
-      value: gitlab://${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
+      value: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
     - name: devspacesWorkspaceUrl
       value: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/devspaces-dotnet-web-api-sample
-
