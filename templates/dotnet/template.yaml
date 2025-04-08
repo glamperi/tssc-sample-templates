@@ -7,13 +7,8 @@ spec:
   type: template
   parameters:
     required:
-      - name
+      - gitlabGroup
     properties:
-      name:
-        title: Project Name
-        type: string
-        description: The name of the project
-        default: dotnet-web-api-sample
       gitlabGroup:
         title: GitLab Group
         type: string
@@ -23,24 +18,25 @@ spec:
     - id: clone-github-repo
       action: fetch:plain
       input:
-        url: https://github.com/glamperi/${{ parameters.name }}.git
+        url: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
     - id: push-to-gitlab
       action: publish:gitlab
       input:
-        repoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/${{ parameters.name }}.git
-        repoName: ${{ parameters.name }}
+        repoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
+        repoName: devspaces-dotnet-web-api-sample
         repoDescription: A sample .NET Web API repository
         repoVisibility: private
       dependsOn: [clone-github-repo]
     - id: create-devspaces-workspace
       action: devspaces:create-workspace
       input:
-        workspaceName: ${{ parameters.name }}
+        workspaceName: devspaces-dotnet-web-api-sample
         workspaceDescription: A sample .NET Web API workspace
-        gitRepoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/${{ parameters.name }}.git
+        gitRepoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
       dependsOn: [push-to-gitlab]
   outputs:
     - name: gitlabRepoUrl
-      value: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/${{ parameters.name }}.git
+      value: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
     - name: devspacesWorkspaceUrl
-      value: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.name }}
+      value: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/devspaces-dotnet-web-api-sample
+
