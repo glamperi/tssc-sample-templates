@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: devspaces-dotnet-web-api-sample
-  title: dot net METAS 15
+  title: dot net METAS 16
 spec:
   type: template
   parameters:
@@ -26,7 +26,7 @@ spec:
         sourcePath: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
         allowedHosts: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
         description: This is GitOps repository for ${{ parameters.name }}
-        repoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
+        repoUrl: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
         defaultBranch: main
         protectDefaultBranch: false
         repoVisibility: "public"
