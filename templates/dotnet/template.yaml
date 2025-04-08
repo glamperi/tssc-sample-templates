@@ -3,6 +3,7 @@ kind: Template
 metadata:
   name: devspaces-dotnet-web-api-sample
 spec:
+  type: template
   parameters:
     - name: gitlabRepoUrl
       type: string
