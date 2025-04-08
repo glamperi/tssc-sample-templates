@@ -26,7 +26,7 @@ spec:
         sourcePath: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
         allowedHosts: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
         description: This is GitOps repository for ${{ parameters.name }}
-        repoUrl:  gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
+        repoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
         defaultBranch: main
         protectDefaultBranch: false
         repoVisibility: "public"
@@ -36,9 +36,11 @@ spec:
         workspaceName: devspaces-dotnet-web-api-sample
         workspaceDescription: A sample .NET Web API workspace
         gitRepoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
-      dependsOn: [push-to-gitlab]
+      dependsOn: [publish-gitlab-gitops]
   outputs:
     - name: gitlabRepoUrl
       value: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
     - name: devspacesWorkspaceUrl
       value: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/devspaces-dotnet-web-api-sample
+
+   
