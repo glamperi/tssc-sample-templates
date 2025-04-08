@@ -1,31 +1,35 @@
-apiVersion: devhub.opendatahub.io/v1
+apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: devspaces-dotnet-web-api-sample
 spec:
-  params:
-    - name: gitlab-repo-url
+  parameters:
+    - name: gitlabRepoUrl
       type: string
       description: The URL of the GitLab repository
-  sources:
-    - git:
+  steps:
+    - id: clone-github-repo
+      action: fetch:plain
+      input:
         url: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
-        ref: main
-  components:
-    - component:
-        name: devspaces-dotnet-web-api-sample
-        source:
-          git:
-            url: $(params.gitlab-repo-url)
-            ref: main
-        devspaces:
-          workspace:
-            name: devspaces-dotnet-web-api-sample
-            description: A sample .NET Web API workspace
+    - id: push-to-gitlab
+      action: publish:gitlab
+      input:
+        repoUrl: ${{ parameters.gitlabRepoUrl }}
+        repoName: devspaces-dotnet-web-api-sample
+        repoDescription: A sample .NET Web API repository
+        repoVisibility: private
+      dependsOn: [clone-github-repo]
+    - id: create-devspaces-workspace
+      action: devspaces:create-workspace
+      input:
+        workspaceName: devspaces-dotnet-web-api-sample
+        workspaceDescription: A sample .NET Web API workspace
+        gitRepoUrl: ${{ parameters.gitlabRepoUrl }}
+      dependsOn: [push-to-gitlab]
   outputs:
-    - name: gitlab-repo-url
-      value: $(params.gitlab-repo-url)
-    - name: devspaces-workspace-url
+    - name: gitlabRepoUrl
+      value: ${{ parameters.gitlabRepoUrl }}
+    - name: devspacesWorkspaceUrl
       value: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/devspaces-dotnet-web-api-sample
-
 
