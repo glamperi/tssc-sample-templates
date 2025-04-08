@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: devspaces-dotnet-web-api-sample
-  title: dot net METAS 7
+  title: dot net METAS 8
 spec:
   type: template
   parameters:
