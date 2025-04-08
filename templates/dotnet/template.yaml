@@ -8,11 +8,16 @@ spec:
     - name: gitlabRepoUrl
       type: string
       description: The URL of the GitLab repository
+      default: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/user1/devspaces-dotnet-web-api-sample.git
+    - name: githubRepoUrl
+      type: string
+      description: The URL of the GitHub repository
+      default: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
   steps:
     - id: clone-github-repo
       action: fetch:plain
       input:
-        url: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
+        url: ${{ parameters.githubRepoUrl }}
     - id: push-to-gitlab
       action: publish:gitlab
       input:
@@ -33,4 +38,3 @@ spec:
       value: ${{ parameters.gitlabRepoUrl }}
     - name: devspacesWorkspaceUrl
       value: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/devspaces-dotnet-web-api-sample
-
