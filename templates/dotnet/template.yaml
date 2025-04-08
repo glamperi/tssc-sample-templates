@@ -1,0 +1,31 @@
+apiVersion: devhub.opendatahub.io/v1
+kind: Template
+metadata:
+  name: devspaces-dotnet-web-api-sample
+spec:
+  params:
+    - name: gitlab-repo-url
+      type: string
+      description: The URL of the GitLab repository
+  sources:
+    - git:
+        url: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
+        ref: main
+  components:
+    - component:
+        name: devspaces-dotnet-web-api-sample
+        source:
+          git:
+            url: $(params.gitlab-repo-url)
+            ref: main
+        devspaces:
+          workspace:
+            name: devspaces-dotnet-web-api-sample
+            description: A sample .NET Web API workspace
+  outputs:
+    - name: gitlab-repo-url
+      value: $(params.gitlab-repo-url)
+    - name: devspaces-workspace-url
+      value: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/devspaces-dotnet-web-api-sample
+
+
