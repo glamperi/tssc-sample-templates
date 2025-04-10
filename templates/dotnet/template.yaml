@@ -23,9 +23,10 @@ spec:
       input:
         url: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
 
+
     - id: git-push
       name: Push to GitLab
-      action: git:publish
+      action: publish:gitlab
       input:
         repoUrl: "${{ parameters.targetRepo }}"
         defaultBranch: main
