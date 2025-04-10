@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 7
+  title: Create DevSpaces Workspace for .NET API - 8
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -33,6 +33,7 @@ spec:
         gitAuthorName: "DevHub Automation"
         gitAuthorEmail: "devhub@example.com"
         name: Push to GitLab
+
  
 
     - id: create-devspaces
