@@ -1,46 +1,50 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: devspaces-dotnet-web-api-sample
-  title: dot net METAS 16
+  name: create-devspaces-dotnet-api
+  title: Create DevSpaces Workspace for .NET API - 1
+  description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
-  type: template
+  owner: user1
+  type: service
   parameters:
-    required:
-      - gitlabGroup
-    properties:
-      gitlabGroup:
-        title: GitLab Group
-        type: string
-        description: The GitLab group where the project will be created
-        default: user1
+    - title: GitLab Repository Info
+      required: []
+      properties:
+        targetRepo:
+          type: string
+          title: Target GitLab Repo URL
+          default: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/user1/devspaces-dotnet-web-api-sample.git
+
   steps:
-    - id: clone-github-repo
+    - id: clone-and-push
+      name: Clone GitHub and Push to GitLab
       action: fetch:plain
       input:
         url: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
-    - id: publish-gitlab-gitops
-      name: Publish GitOps Repository to GitLab
-      action: publish:gitlab
-      input:
-        sourcePath: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
-        allowedHosts: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
-        description: This is GitOps repository for ${{ parameters.name }}
-        repoUrl: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
-        defaultBranch: main
-        protectDefaultBranch: false
-        repoVisibility: "public"
-    - id: create-devspaces-workspace
-      action: devspaces:create-workspace
-      input:
-        workspaceName: devspaces-dotnet-web-api-sample
-        workspaceDescription: A sample .NET Web API workspace
-        gitRepoUrl: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
-      dependsOn: [publish-gitlab-gitops]
-  outputs:
-    - name: gitlabRepoUrl
-      value: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/${{ parameters.gitlabGroup }}/devspaces-dotnet-web-api-sample.git
-    - name: devspacesWorkspaceUrl
-      value: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/devspaces-dotnet-web-api-sample
 
-   
+    - id: git-push
+      name: Push to GitLab
+      action: git:publish
+      input:
+        repoUrl: "${{ parameters.targetRepo }}"
+        defaultBranch: main
+        gitAuthorName: "DevHub Automation"
+        gitAuthorEmail: "devhub@example.com"
+
+    - id: create-devspaces
+      name: Create DevSpaces Workspace
+      action: http:post
+      input:
+        url: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/plugin/devspaces/create
+        headers:
+          Content-Type: application/json
+        body:
+          repoUrl: "${{ parameters.targetRepo }}"
+
+  output:
+    links:
+      - title: GitLab Repository
+        url: "${{ parameters.targetRepo }}"
+      - title: DevSpaces Workspace
+        url: "https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#${{ parameters.targetRepo | base64 }}"
