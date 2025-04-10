@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 8
+  title: Create DevSpaces Workspace for .NET API - 9
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -28,7 +28,7 @@ spec:
       name: Push to GitLab
       action: publish:gitlab
       input:
-        repoUrl: gitlab:gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/user1/devspaces-dotnet-web-api-sample
+        repoUrl: gitlab:gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com?owner=user1&repo=devspaces-dotnet-web-api-sample
         defaultBranch: main
         gitAuthorName: "DevHub Automation"
         gitAuthorEmail: "devhub@example.com"
