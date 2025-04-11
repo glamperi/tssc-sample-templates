@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 11
+  title: Create DevSpaces Workspace for .NET API - 12
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -34,14 +34,14 @@ spec:
         gitAuthorEmail: "devhub@example.com"
         name: Push to GitLab
 
- 
+
 
     - id: create-devspaces
       name: Create DevSpaces Workspace
       action: http:backstage:request
       input:
         method: 'POST'
-        url: https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/plugin/devspaces/create
+        path: '/devspaces/plugin/devspaces/create'
         headers:
           Content-Type: application/json
         body:
