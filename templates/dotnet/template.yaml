@@ -48,7 +48,7 @@ spec:
       action: http:backstage:request
       input:
         method: 'POST'
-        path: '/api/proxy/devspaces/plugin/devspaces/create'
+        path: '/api/proxy/devspaces/api/workspaces'
         headers:
           Content-Type: application/json
         body:
