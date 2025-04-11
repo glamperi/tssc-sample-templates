@@ -48,12 +48,11 @@ spec:
       action: http:backstage:request
       input:
         method: 'POST'
-        path: '/devspaces/plugin/devspaces/create'
+        url: 'http://localhost:7007/devspaces/plugin/devspaces/create'  # Or full URL
         headers:
           Content-Type: application/json
         body:
-          repoUrl: "https://example.com/test.git"     
-    
+          repoUrl: "https://example.com/test.git"
 
 
    
