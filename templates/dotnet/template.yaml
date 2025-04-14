@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 25
+  title: Create DevSpaces Workspace for .NET API - 26
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -52,7 +52,7 @@ spec:
       name: Set Output Links
       action: debug:log
       input:
-        message: "Preparing dynamic output links"
+        message: "GitLab Host: ${{ parameters.gitlabHost }} | Repo Path: ${{ parameters.repoOwner }}/${{ parameters.repoName }}"
       output:
         gitlabRepoUrl: "${{ 'https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName }}"
         devspacesUrlBase: "${{ 'https://devspaces.apps.' + (parameters.gitlabHost | split('.') | slice(1) | join('.')) + '/#' + ('https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName) }}"
@@ -62,8 +62,10 @@ spec:
       name: Log DevSpaces Launch URL
       action: debug:log
       input:
-        message: "DevSpaces launch URL: ${{ steps.set-links.output.devspacesUrlBase }} | Base64 URL: ${{ steps.set-links.output.devspacesUrl }}"
-  
+        message: |
+          DevSpaces base URL: ${{ steps.set-links.output.devspacesUrlBase }}
+          Encoded DevSpaces launch URL: ${{ steps.set-links.output.devspacesUrl }}
+
   output:
     links:
       - title: GitLab Repository
