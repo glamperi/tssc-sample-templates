@@ -2,14 +2,14 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 28
+  title: Create DevSpaces Workspace for .NET API - 29
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
   type: service
   parameters:
     - title: Repo Information
-      required: [githubRepoUrl, gitlabHost, repoOwner, repoName, devspacesDomain]
+      required: [githubRepoUrl, gitlabHost, repoOwner, repoName]
       properties:
         githubRepoUrl:
           type: string
@@ -27,10 +27,6 @@ spec:
           type: string
           title: GitLab Repository Name
           default: devspaces-dotnet-web-api-sample
-        devspacesDomain:
-          type: string
-          title: DevSpaces Domain (no protocol)
-          default: devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
 
   steps:
     - id: fetch-template
@@ -48,26 +44,31 @@ spec:
         gitAuthorName: "DevHub Automation"
         gitAuthorEmail: "devhub@example.com"
 
-    - id: set-links
-      name: Set Output Links
-      action: debug:log
+    - id: generate-links
+      name: Generate Output URLs
+      action: run:script
       input:
-        message: "Generating DevSpaces and GitLab URLs"
-      output:
-        gitlabRepoUrl: "${{ 'https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName }}"
-        devspacesUrl: "${{ 'https://' + parameters.devspacesDomain + '/#' + ('https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName) | base64 }}"
+        script: |
+          const gitlabUrl = `https://${parameters.gitlabHost}/${parameters.repoOwner}/${parameters.repoName}`;
+          const devspacesBaseUrl = `https://devspaces.apps.${parameters.gitlabHost.split('.').slice(1).join('.')}`;
+          const encoded = Buffer.from(gitlabUrl).toString('base64');
+          const devspacesUrl = `${devspacesBaseUrl}/#${encoded}`;
+          return {
+            gitlabRepoUrl: gitlabUrl,
+            devspacesUrl
+          };
 
-    - id: log-link
-      name: Log DevSpaces Launch URL
+    - id: log-links
+      name: Log the links
       action: debug:log
       input:
         message: |
-          GitLab URL: ${{ steps.set-links.output.gitlabRepoUrl }}
-          DevSpaces launch URL: ${{ steps.set-links.output.devspacesUrl }}
+          GitLab URL: ${{ steps.generate-links.output.gitlabRepoUrl }}
+          DevSpaces URL: ${{ steps.generate-links.output.devspacesUrl }}
 
   output:
     links:
       - title: GitLab Repository
-        url: "${{ steps.set-links.output.gitlabRepoUrl }}"
+        url: "${{ steps.generate-links.output.gitlabRepoUrl }}"
       - title: Open in DevSpaces
-        url: "${{ steps.set-links.output.devspacesUrl }}"
+        url: "${{ steps.generate-links.output.devspacesUrl }}"
