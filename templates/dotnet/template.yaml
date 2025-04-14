@@ -55,8 +55,8 @@ spec:
           https://devspaces.apps.${{ parameters.gitlabHost | split('.') | slice(1) | join('.') }}/#https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}
 
   output:
-    links:
-      - title: GitLab Repository
-        url: "https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}"
-      - title: Open in DevSpaces
-        url: "https://devspaces.apps.${{ parameters.gitlabHost | split('.') | slice(1) | join('.') }}/#https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName } | base64 }}"
+  links:
+    - title: GitLab Repository
+      url: "${{ 'https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName }}"
+    - title: Open in DevSpaces
+      url: "${{ 'https://devspaces.apps.' + (parameters.gitlabHost | split('.') | slice(1) | join('.')) + '/#' + ('https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName) | base64 }}"
