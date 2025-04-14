@@ -55,13 +55,14 @@ spec:
         message: "Preparing dynamic output links"
       output:
         gitlabRepoUrl: "${{ 'https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName }}"
-        devspacesUrl: "${{ 'https://devspaces.apps.' + (parameters.gitlabHost | split('.') | slice(1) | join('.')) + '/#' + ('https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName) | base64 }}"
+        devspacesUrlBase: "${{ 'https://devspaces.apps.' + (parameters.gitlabHost | split('.') | slice(1) | join('.')) + '/#' + ('https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName) }}"
+        devspacesUrl: "${{ devspacesUrlBase | base64 }}"
    
     - id: log-link
       name: Log DevSpaces Launch URL
       action: debug:log
       input:
-        message: "DevSpaces launch URL: ${{ steps.set-links.output.devspacesUrl }}"
+        message: "DevSpaces launch URL: ${{ steps.set-links.output.devspacesUrlBase }} | Base64 URL: ${{ steps.set-links.output.devspacesUrl }}"
   
   output:
     links:
