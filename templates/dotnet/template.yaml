@@ -2,49 +2,61 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 21
+  title: Create DevSpaces Workspace for .NET API - 22
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
   type: service
   parameters:
-    - title: GitLab Repository Info
-      required: []
+    - title: Repo Information
+      required: [githubRepoUrl, gitlabHost, repoOwner, repoName]
       properties:
-        targetRepo:
+        githubRepoUrl:
           type: string
-          title: Target GitLab Repo URL
-          default: https://gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/user1/devspaces-dotnet-web-api-sample.git
+          title: GitHub Source Repository (URL)
+          default: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
+        gitlabHost:
+          type: string
+          title: GitLab Host (no protocol)
+          default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
+        repoOwner:
+          type: string
+          title: GitLab Owner / Namespace
+          default: user1
+        repoName:
+          type: string
+          title: GitLab Repository Name
+          default: devspaces-dotnet-web-api-sample
+
 
   steps:
-    - id: clone-and-push
-      name: Clone GitHub and Push to GitLab
+    - id: fetch-template
+      name: Clone GitHub Repo
       action: fetch:plain
       input:
-        url: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
+        url: ${{ parameters.githubRepoUrl }}
 
-
-    - id: git-push
+    - id: push-to-gitlab
       name: Push to GitLab
       action: publish:gitlab
       input:
-        repoUrl: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com?owner=user1&repo=devspaces-dotnet-web-api-sample
+        repoUrl: ${{ parameters.gitlabHost }}?owner=${{ parameters.repoOwner }}&repo=${{ parameters.repoName }}
         defaultBranch: main
         gitAuthorName: "DevHub Automation"
         gitAuthorEmail: "devhub@example.com"
-        name: Push to GitLab
 
     - id: log-link
       name: Log DevSpaces Launch URL
       action: debug:log
       input:
         message: |
-          Workspace ready! You can launch it in DevSpaces using:
-          https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#${{ parameters.targetRepo | base64 }}
+          Repo pushed to GitLab.
+          Launch in DevSpaces:
+          https://devspaces.apps.${{ parameters.gitlabHost | split('.') | slice(1) | join('.') }}/#https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}
 
   output:
     links:
       - title: GitLab Repository
-        url: "${{ parameters.targetRepo }}"
+        url: "https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}"
       - title: Open in DevSpaces
-        url: "https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#${{ parameters.targetRepo | base64 }}"
+        url: "https://devspaces.apps.${{ parameters.gitlabHost | split('.') | slice(1) | join('.') }}/#https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName } | base64 }}"
