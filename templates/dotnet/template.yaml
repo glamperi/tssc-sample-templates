@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 20
+  title: Create DevSpaces Workspace for .NET API - 21
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -37,12 +37,13 @@ spec:
 
     
 
-    - id: debug
-      name: Log
+     - id: log-link
+      name: Log DevSpaces Launch URL
       action: debug:log
       input:
-        message: "Repo pushed. DevSpaces will open using base64-encoded repo URL."
-
+        message: |
+          Workspace ready! You can launch it in DevSpaces using:
+          https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#${{ parameters.targetRepo | base64 }}
 
   output:
     links:
