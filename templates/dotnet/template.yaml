@@ -2,36 +2,35 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 27
+  title: Create DevSpaces Workspace for .NET API - 28
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
   type: service
   parameters:
-  - title: Repo Information
-    required: [githubRepoUrl, gitlabHost, repoOwner, repoName, devspacesDomain]
-    properties:
-      githubRepoUrl:
-        type: string
-        title: GitHub Source Repository (URL)
-        default: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
-      gitlabHost:
-        type: string
-        title: GitLab Host (no protocol)
-        default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
-      repoOwner:
-        type: string
-        title: GitLab Owner / Namespace
-        default: user1
-      repoName:
-        type: string
-        title: GitLab Repository Name
-        default: devspaces-dotnet-web-api-sample
-      devspacesDomain:
-        type: string
-        title: DevSpaces Domain (without https://, e.g., devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com)
-        default: devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
-
+    - title: Repo Information
+      required: [githubRepoUrl, gitlabHost, repoOwner, repoName, devspacesDomain]
+      properties:
+        githubRepoUrl:
+          type: string
+          title: GitHub Source Repository (URL)
+          default: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
+        gitlabHost:
+          type: string
+          title: GitLab Host (no protocol)
+          default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
+        repoOwner:
+          type: string
+          title: GitLab Owner / Namespace
+          default: user1
+        repoName:
+          type: string
+          title: GitLab Repository Name
+          default: devspaces-dotnet-web-api-sample
+        devspacesDomain:
+          type: string
+          title: DevSpaces Domain (no protocol)
+          default: devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
 
   steps:
     - id: fetch-template
@@ -49,25 +48,22 @@ spec:
         gitAuthorName: "DevHub Automation"
         gitAuthorEmail: "devhub@example.com"
 
-    
-
-
     - id: set-links
       name: Set Output Links
       action: debug:log
       input:
-        message: "Preparing output links"
+        message: "Generating DevSpaces and GitLab URLs"
       output:
         gitlabRepoUrl: "${{ 'https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName }}"
         devspacesUrl: "${{ 'https://' + parameters.devspacesDomain + '/#' + ('https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName) | base64 }}"
-   
+
     - id: log-link
       name: Log DevSpaces Launch URL
       action: debug:log
       input:
         message: |
-          DevSpaces base URL: ${{ steps.set-links.output.devspacesUrlBase }}
-          Encoded DevSpaces launch URL: ${{ steps.set-links.output.devspacesUrl }}
+          GitLab URL: ${{ steps.set-links.output.gitlabRepoUrl }}
+          DevSpaces launch URL: ${{ steps.set-links.output.devspacesUrl }}
 
   output:
     links:
