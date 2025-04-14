@@ -50,13 +50,26 @@ spec:
       action: debug:log
       input:
         message: |
-          Repo pushed to GitLab.
-          Launch in DevSpaces:
-          https://devspaces.apps.${{ parameters.gitlabHost | split('.') | slice(1) | join('.') }}/#https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}
+          Repo successfully pushed to GitLab.
+          DevSpaces link will be available below in the output links section.
 
+
+    - id: set-links
+      name: Set Output Links
+      action: debug:log
+      input:
+        message: "Preparing dynamic output links"
+      output:
+        gitlabRepoUrl: "${{ 'https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName }}"
+        devspacesUrl: "${{ 'https://devspaces.apps.' + (parameters.gitlabHost | split('.') | slice(1) | join('.')) + '/#' + ('https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName) | base64 }}"
+  
+  
+  
+  
+  
   output:
   links:
     - title: GitLab Repository
-      url: "${{ 'https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName }}"
+      url: "${{ steps.set-links.output.gitlabRepoUrl }}"
     - title: Open in DevSpaces
-      url: "${{ 'https://devspaces.apps.' + (parameters.gitlabHost | split('.') | slice(1) | join('.')) + '/#' + ('https://' + parameters.gitlabHost + '/' + parameters.repoOwner + '/' + parameters.repoName) | base64 }}"
+      url: "${{ steps.set-links.output.devspacesUrl }}"
