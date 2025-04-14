@@ -39,8 +39,8 @@ spec:
        action: debug:log
        input:
          message: |
-          Workspace ready! You can launch it in DevSpaces using:
-          https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#${{ parameters.targetRepo | base64 }}
+           Workspace ready! You can launch it in DevSpaces using:
+           https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#${{ parameters.targetRepo | base64 }}
 
   output:
     links:
