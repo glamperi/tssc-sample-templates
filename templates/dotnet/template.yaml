@@ -34,13 +34,13 @@ spec:
         gitAuthorEmail: "devhub@example.com"
         name: Push to GitLab
 
-     - id: log-link
-       name: Log DevSpaces Launch URL
-       action: debug:log
-       input:
-         message: |
-           Workspace ready! You can launch it in DevSpaces using:
-           https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#${{ parameters.targetRepo | base64 }}
+    - id: log-link
+      name: Log DevSpaces Launch URL
+      action: debug:log
+      input:
+        message: |
+          Workspace ready! You can launch it in DevSpaces using:
+          https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#${{ parameters.targetRepo | base64 }}
 
   output:
     links:
