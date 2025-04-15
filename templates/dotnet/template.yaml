@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - *5
+  title: Create DevSpaces Workspace for .NET API - *6
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -34,7 +34,7 @@ spec:
           default: .apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
 
   steps:
-    
+
     - id: fetch-template
       name: Fetch base skeleton
       action: fetch:template
@@ -62,7 +62,6 @@ spec:
       action: catalog:register
       input:
         location: "url:https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}/blob/main/catalog-info.yaml"
-        optional: true
 
   output:
     links:
