@@ -2,14 +2,15 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API 
+  title: Create DevSpaces Workspace for .NET API - *
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
   type: service
+
   parameters:
     - title: Repo Information
-      required: [githubRepoUrl, gitlabHost, repoOwner, repoName]
+      required: [githubRepoUrl, gitlabHost, repoOwner, repoName, cluster]
       properties:
         githubRepoUrl:
           type: string
@@ -27,15 +28,26 @@ spec:
           type: string
           title: GitLab Repository Name
           default: devspaces-dotnet-web-api-sample
+        cluster:
+          type: string
+          title: Cluster domain (e.g. .apps.cluster-xyz.abc.sandbox.opentlc.com)
+          default: .apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
 
   steps:
     - id: fetch-template
-      name: Clone GitHub Repo
-      action: fetch:plain
+      name: Fetch base skeleton
+      action: fetch:template
       input:
-        url: ${{ parameters.githubRepoUrl }}
+        url: ./skeleton
+        targetPath: .
+        values:
+          component_id: ${{ parameters.repoName }}
+          description: A .NET API demo project
+          host: ${{ parameters.gitlabHost }}
+          destination: ${{ parameters.repoOwner }}/${{ parameters.repoName }}
+          cluster: ${{ parameters.cluster }}
 
-    - id: push-to-gitlab
+    - id: publish
       name: Push to GitLab
       action: publish:gitlab
       input:
@@ -44,11 +56,16 @@ spec:
         gitAuthorName: "DevHub Automation"
         gitAuthorEmail: "devhub@example.com"
 
-   
-  
+    - id: register
+      name: Register Component in Backstage Catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: "https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}"
+        catalogInfoPath: "/catalog-info.yaml"
+
   output:
     links:
       - title: GitLab Repository
         url: "https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}"
       - title: Open in DevSpaces
-        url: "https://devspaces.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com/#aHR0cHM6Ly9naXRsYWItZ2l0bGFiLmFwcHMuY2x1c3Rlci12bmZqcS52bmZqcS5zYW5kYm94MTk1Ny5vcGVudGxjLmNvbS8${{ parameters.repoOwner }}/${{ parameters.repoName }}"
+        url: "https://devspaces${{ parameters.cluster }}/dashboard/#https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}"
