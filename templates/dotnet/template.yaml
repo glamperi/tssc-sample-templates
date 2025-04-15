@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - *6
+  title: Create DevSpaces Workspace for .NET API - *7
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -61,7 +61,8 @@ spec:
       name: Register Component in Backstage Catalog
       action: catalog:register
       input:
-        location: "url:https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}/blob/main/catalog-info.yaml"
+        repoContentsUrl: "https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}/blob/main"
+        catalogInfoPath: "/catalog-info.yaml"
 
   output:
     links:
