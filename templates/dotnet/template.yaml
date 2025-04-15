@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - *8
+  title: Create DevSpaces Workspace for .NET API - 1
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -34,13 +34,12 @@ spec:
           default: .apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
 
   steps:
-
     - id: fetch-template
-      name: Fetch base skeleton
+      name: Fetch template
       action: fetch:template
       input:
-        url: ./skeleton_netapi  
-        targetPath: .
+        url: ./skeleton_netapi
+        targetPath: ./workspace
         values:
           component_id: ${{ parameters.repoName }}
           description: A .NET API demo project
@@ -49,21 +48,23 @@ spec:
           cluster: ${{ parameters.cluster }}
 
     - id: publish
-      name: Push to GitLab
+      name: Publish to GitLab
       action: publish:gitlab
       input:
         repoUrl: ${{ parameters.gitlabHost }}?owner=${{ parameters.repoOwner }}&repo=${{ parameters.repoName }}
         defaultBranch: main
-        gitAuthorName: "DevHub Automation"
-        gitAuthorEmail: "devhub@example.com"
+        gitAuthorName: DevHub Automation
+        gitAuthorEmail: devhub@example.com
+        sourcePath: ./workspace
 
     - id: register
-      name: Register Component in Backstage Catalog
-      action: catalog:register
-      optional: true
+      name: Register component in Backstage catalog
+      action: catalog:write
       input:
-        repoContentsUrl: "https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}/blob/main"
-        catalogInfoPath: "/catalog-info.yaml"
+        location:
+          type: url
+          target: "https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}/-/blob/main/catalog-info.yaml"
+        entity: "./workspace/catalog-info.yaml"
 
   output:
     links:
@@ -71,3 +72,4 @@ spec:
         url: "https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}"
       - title: Open in DevSpaces
         url: "https://devspaces${{ parameters.cluster }}/dashboard/#https://${{ parameters.gitlabHost }}/${{ parameters.repoOwner }}/${{ parameters.repoName }}"
+
