@@ -23,7 +23,16 @@ spec:
         repoOwner:
           type: string
           title: GitLab Owner / Namespace
-          default: user:user1
+          default: user1
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          default: user:guest
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              kind: [Group, User]
         repoName:
           type: string
           title: GitLab Repository Name
