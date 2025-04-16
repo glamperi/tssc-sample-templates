@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Move to Target Repo & Create DevSpaces Workspace for .NET API 3
+  title: Move to Target Repo & Create DevSpaces Workspace for .NET API 4
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -10,12 +10,8 @@ spec:
 
   parameters:
     - title: Repo Information
-      required: [githubRepoUrl, gitlabHost, repoOwner, repoName, cluster]
+      required: [gitlabHost, repoOwner, repoName, cluster]
       properties:
-        githubRepoUrl:
-          type: string
-          title: GitHub Source Repository (URL)
-          default: https://github.com/glamperi/devspaces-dotnet-web-api-sample.git
         gitlabHost:
           type: string
           title: GitLab Host (no protocol)
