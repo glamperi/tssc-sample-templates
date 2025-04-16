@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Create DevSpaces Workspace for .NET API - 2
+  title: Create DevSpaces Workspace for .NET API - 3
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
@@ -38,7 +38,7 @@ spec:
       name: Fetch template
       action: fetch:template
       input:
-        url: ./skeleton_netapi
+        url: url: ../../skeleton_netapi
         targetPath: ./workspace
         values:
           component_id: ${{ parameters.repoName }}
