@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: create-devspaces-dotnet-api
-  title: Move to Target Repo & Create DevSpaces Workspace for .NET API 1
+  title: Move to Target Repo & Create DevSpaces Workspace for .NET API 2
   description: Clones repo to GitLab and starts DevSpaces workspace
 spec:
   owner: user1
