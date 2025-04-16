@@ -38,7 +38,7 @@ spec:
       name: Fetch template
       action: fetch:template
       input:
-        url: url: ../../skeleton_netapi
+        url: ../../skeleton_netapi
         targetPath: ./workspace
         values:
           component_id: ${{ parameters.repoName }}
@@ -56,8 +56,6 @@ spec:
         gitAuthorName: DevHub Automation
         gitAuthorEmail: devhub@example.com
         sourcePath: ./workspace
-
-    
 
     - id: register
       name: Register component in Backstage catalog
