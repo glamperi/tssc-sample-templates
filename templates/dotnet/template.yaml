@@ -57,6 +57,8 @@ spec:
         gitAuthorEmail: devhub@example.com
         sourcePath: ./workspace
 
+    
+
     - id: register
       name: Register component in Backstage catalog
       action: catalog:register
