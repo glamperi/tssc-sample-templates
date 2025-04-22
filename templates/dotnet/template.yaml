@@ -15,7 +15,7 @@ spec:
         gitlabHost:
           type: string
           title: GitLab Host (no protocol)
-          default: gitlab-gitlab.apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
+          default: gitlab-gitlab.apps.cluster-54sqd.54sqd.sandbox2969.opentlc.com
         repoOwner:
           type: string
           title: GitLab Owner / Namespace
@@ -27,8 +27,7 @@ spec:
         cluster:
           type: string
           title: Cluster domain (e.g. .apps.cluster-xyz.abc.sandbox.opentlc.com)
-          default: .apps.cluster-vnfjq.vnfjq.sandbox1957.opentlc.com
-
+          default: .apps.cluster-54sqd.54sqd.sandbox2969.opentlc.com
   steps:
     - id: fetch-template
       name: Fetch template
